@@ -1,27 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MyProject.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MyProject.Infrastructure.Data
+namespace MyProject.Infrastructure.Data;
+
+
+public class AppDbContext : DbContext
 {
-    public class AppDbContext : DbContext
+    private readonly IConfiguration _configuration;
+    public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
-        {
-        }
+        _configuration = configuration;
+    }
+    public DbSet<Designation> Designations { get; set; }
+    public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<Product> Products { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
 
-        // Other DbSet properties can be added here
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // Configure entity mappings and relationships here
-        }
+        modelBuilder.Entity<Employee>()
+        .HasOne<Designation>(s => s.Designation)
+        .WithMany(g => g.Employees)
+        .HasForeignKey(s => s.DesignationId);
     }
 }
+
