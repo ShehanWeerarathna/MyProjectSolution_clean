@@ -1,21 +1,12 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
-using MyProject.Infrastructure.Repositories.Interfaces;
-using MyProject.Infrastructure.Repositories;
-using MyProject.Application.Services.Interfaces;
-using MyProject.Application.Services;
-using MyProject.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using MyProject.Application.Mappings;
+using MyProject.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(MappingProfiles));
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddAppicationServices(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
