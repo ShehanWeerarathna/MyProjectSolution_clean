@@ -13,7 +13,7 @@ namespace MyProject.Application
 {
     public static class ConfigureServices
     {
-        public static IServiceCollection AddAppicationServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             try
             {
