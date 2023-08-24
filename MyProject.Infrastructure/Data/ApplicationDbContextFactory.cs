@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using MyProject.Infrastructure.Data;
 
-namespace MyProject.WebAPI;
+
+namespace MyProject.Infrastructure.Data;
 
 public class ApplicationDbContextFactory :  IDesignTimeDbContextFactory<AppDbContext>
 {
@@ -17,6 +17,6 @@ public class ApplicationDbContextFactory :  IDesignTimeDbContextFactory<AppDbCon
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 
-        return new AppDbContext(optionsBuilder.Options, configuration);
+        return new AppDbContext(optionsBuilder.Options);
     }
 }
